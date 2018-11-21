@@ -27,7 +27,8 @@ public class Term implements Comparable<Term> {
 	 *             if weight is negative
 	 */
 	public Term(String word, double weight) {
-		// TODO: Complete Term constructor
+		if(word == null) throw new NullPointerException("no word inputted");
+		if(weight < 0) throw new IllegalArgumentException("negative weight " + weight);
 		
 		myWord = word;
 		myWeight = weight;
@@ -85,9 +86,39 @@ public class Term implements Comparable<Term> {
 		 *            - Two Terms whose words are being compared
 		 */
 		public int compare(Term v, Term w) {
-			// TODO: Implement compare
+			if(v.getWord().length() < myPrefixSize && w.getWord().length() < myPrefixSize) {
+				if(v.getWord().equals(w.getWord())) return 0;
+			}
+			
+			if(v.getWord().length() >= myPrefixSize && w.getWord().length() >= myPrefixSize) {
+				for(int i = 0; i < myPrefixSize; i++) {
+					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
+						return v.getWord().charAt(i) - w.getWord().charAt(i);
+					}
+				}
+				return 0;
+			}
+			
+			if(v.getWord().length() < myPrefixSize) {
+				for(int i = 0; i < v.getWord().length(); i++) {
+					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
+						return v.getWord().charAt(i) - w.getWord().charAt(i);
+					}
+				}
+				return -1;
+			}
+			
+			if(w.getWord().length() < myPrefixSize) {
+				for(int i = 0; i < w.getWord().length(); i++) {
+					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
+						return v.getWord().charAt(i) - w.getWord().charAt(i);
+					}
+				}
+				return 1;
+			}
 			
 			return 0;
+			
 		}
 	
 	}
@@ -100,7 +131,10 @@ public class Term implements Comparable<Term> {
 	 */
 	public static class ReverseWeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
-			// TODO: implement compare
+			if(v.getWeight() > w.getWeight())
+				return -1;
+			if(v.getWeight() < w.getWeight())
+				return 1;
 			
 			return 0;
 		}
@@ -114,7 +148,10 @@ public class Term implements Comparable<Term> {
 	 */
 	public static class WeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
-			// TODO: implement compare
+			if(v.getWeight() < w.getWeight())
+				return -1;
+			if(v.getWeight() > w.getWeight())
+				return 1;
 			
 			return 0;
 		}
