@@ -71,7 +71,10 @@ Explain your answer which should be in terms of N, M, and k.
 			return ret;
 		}
 
-Big-Oh complexity:
+	Big-Oh complexity: O(Mlogk)
+	Justification: The first if statement in the for loop ensures that the PriorityQueue operations are only done on M
+	terms instead of n terms. Since every PriorityQueue operation runs on O(log k), for M terms, the Big-Oh complexity
+	will be O(Mlogk)
 
 (4) Explain why the last for loop in BruteAutocomplete.topMatches 
 uses a LinkedList (and not an ArrayList) 
@@ -123,6 +126,10 @@ and explaining your answer in terms of N, M, and k.
 		return list;
 	}
 	
-
+	Runtime: O(logN + MlogM)
+	Justification: firstIndexOf and lastIndexOf are binary searches, making them O(logN). 
+	The array of Terms only contains the terms that have the desired prefix (M terms), and
+	Arrays.sort operates on O(nlogn), making the runtime after int first and int last O(MlogM).
+	Thus, the overall runtime is O(logN + MlogM).
 
 
