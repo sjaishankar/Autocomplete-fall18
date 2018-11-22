@@ -27,6 +27,7 @@ public class Term implements Comparable<Term> {
 	 *             if weight is negative
 	 */
 	public Term(String word, double weight) {
+		//throw exceptions for invalid word inputs or invalid weights
 		if(word == null) throw new NullPointerException("no word inputted");
 		if(weight < 0) throw new IllegalArgumentException("negative weight " + weight);
 		
@@ -84,12 +85,16 @@ public class Term implements Comparable<Term> {
 		 * 
 		 * @param v/w
 		 *            - Two Terms whose words are being compared
+		 *          
 		 */
 		public int compare(Term v, Term w) {
+			/*Checks to see if both Terms are shorter than the prefix length, and if so and they are equal, return 0.
+			If both Terms are shorter than prefix length but are not equal, the third if block runs.*/
 			if(v.getWord().length() < myPrefixSize && w.getWord().length() < myPrefixSize) {
 				if(v.getWord().equals(w.getWord())) return 0;
 			}
 			
+			//If both Terms are longer than prefix size, compares the first prefix-length characters of the two Terms
 			if(v.getWord().length() >= myPrefixSize && w.getWord().length() >= myPrefixSize) {
 				for(int i = 0; i < myPrefixSize; i++) {
 					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
@@ -99,6 +104,7 @@ public class Term implements Comparable<Term> {
 				return 0;
 			}
 			
+			//compares two Terms up to Term v's length if Term v's length is shorter than the prefix size
 			if(v.getWord().length() < myPrefixSize) {
 				for(int i = 0; i < v.getWord().length(); i++) {
 					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
@@ -108,6 +114,7 @@ public class Term implements Comparable<Term> {
 				return -1;
 			}
 			
+			//compares two Terms up to Term w's length if Term w's length is shorter than the prefix size
 			if(w.getWord().length() < myPrefixSize) {
 				for(int i = 0; i < w.getWord().length(); i++) {
 					if(v.getWord().charAt(i) != w.getWord().charAt(i)) {
@@ -128,6 +135,8 @@ public class Term implements Comparable<Term> {
 	 * order. This Comparator may be useful in writing your implementations of
 	 * Autocompletor
 	 *
+	 *
+	 *compareTo method that sorts Terms based solely on their weights in descending order
 	 */
 	public static class ReverseWeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
@@ -144,6 +153,8 @@ public class Term implements Comparable<Term> {
 	 * A Comparator for comparing Terms using only their weights, in ascending
 	 * order. This Comparator may be useful in writing your implementations of
 	 * Autocompletor
+	 * 
+	 * compareTo method that sorts Terms based solely on their weights in ascending order
 	 *
 	 */
 	public static class WeightOrder implements Comparator<Term> {
